@@ -1,6 +1,8 @@
 package services;
 
 import actors.InventoryActor;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import messages.ReservationResult;
 import messages.ReserveGiftCard;
 import models.PurchaseRequest;
@@ -18,7 +20,8 @@ public class CheckoutService {
     private final TransactionRepository repository;
     private final ActorRef inventoryActor;
 
-    public CheckoutService(TransactionRepository repository, ActorRef inventoryActor) {
+    @Inject
+    public CheckoutService(TransactionRepository repository, @Named("inventory-actor")ActorRef inventoryActor) {
         this.repository = repository;
         this.inventoryActor = inventoryActor;
     }

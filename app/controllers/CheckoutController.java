@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.inject.Inject;
 import models.PurchaseRequest;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -7,7 +8,6 @@ import play.mvc.Http;
 import play.mvc.Result;
 import services.CheckoutService;
 
-import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 
 public class CheckoutController extends Controller {
