@@ -1,4 +1,4 @@
 package models;
 
-public record PurchaseRequest(String userId, String productId, Double amount, String currency) {
+public record PurchaseRequest(String userId, String productId, int quantity, Double amount, String currency) {
 }

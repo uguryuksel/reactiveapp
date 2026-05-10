@@ -26,7 +26,7 @@ public class CheckoutService {
     public CompletableFuture<Transaction> checkout(PurchaseRequest request) {
         Duration timeout = Duration.ofSeconds(2);
 
-        return Patterns.ask(inventoryActor, new ReserveGiftCard(request.productId(), 1), timeout)
+        return Patterns.ask(inventoryActor, new ReserveGiftCard(request.productId(), request.quantity()), timeout)
                 .toCompletableFuture()
                 .thenApply(result -> (ReservationResult) result)
                 .thenCompose(reservationResult -> {
