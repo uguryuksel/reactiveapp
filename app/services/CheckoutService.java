@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class CheckoutService {
     private final TransactionRepository repository;
@@ -39,12 +40,12 @@ public class CheckoutService {
                         return PaymentService.processCryptoPayment(request.productId(), request.amount())
                                 .thenCompose(paymentSuccess -> {
                                     if (paymentSuccess) {
-                                        Transaction tr = new Transaction(CheckoutService.generateID().toString(), request.userId(), request.productId(), "Success", Instant.now());
+                                        Transaction tr = new Transaction(CheckoutService.generateID().toString(), request.userId(), request.productId(), "Success", Instant.now(), request.amount());
                                         return repository.save(tr);
                                     } else {
                                         throw new RuntimeException("Payment failed!");
                                     }
-                                });
+                                }).orTimeout(3, TimeUnit.SECONDS);
                     }
                 });
 
